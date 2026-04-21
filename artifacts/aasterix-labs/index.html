@@ -1323,6 +1323,43 @@
         }
 
         /* ── RESPONSIVE ── */
+        /* mobile nav toggle */
+        .nav-toggle {
+            display: none;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            padding: 0;
+            position: relative;
+            z-index: 950;
+        }
+        .nav-toggle span {
+            display: block;
+            position: absolute;
+            left: 6px;
+            right: 6px;
+            height: 2px;
+            background: var(--navy);
+            border-radius: 2px;
+            transition: transform .25s, opacity .2s, top .25s;
+        }
+        .nav-toggle span:nth-child(1) { top: 11px; }
+        .nav-toggle span:nth-child(2) { top: 17px; }
+        .nav-toggle span:nth-child(3) { top: 23px; }
+        .nav-toggle.open span:nth-child(1) { top: 17px; transform: rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { top: 17px; transform: rotate(-45deg); }
+
+        @media(max-width:1024px) {
+            .nav-logo img { height: 130px; }
+            section { padding: 72px 5%; }
+            .h-bgword { font-size: 110px; }
+            .intro-metrics { gap: 32px; }
+            .mbox-n { font-size: 36px; }
+        }
+
         @media(max-width:960px) {
             .why-4 {
                 grid-template-columns: 1fr 1fr
@@ -1375,61 +1412,88 @@
             }
         }
 
-        @media(max-width:640px) {
-            nav {
-                padding: 0 4%
-            }
-
+        @media(max-width:860px) {
+            .nav-toggle { display: block; }
+            .nav-cta { display: none; }
+            nav { padding: 0 5%; }
+            .nav-logo img { height: 100px; }
             .nav-links {
-                gap: 18px
-            }
-
-            .nav-links a {
-                font-size: 10px;
-                letter-spacing: .09em
-            }
-
-            section {
-                padding: 64px 4%
-            }
-
-            .h-h1 {
-                font-size: 44px;
-                letter-spacing: -1px
-            }
-
-            .h-stats {
+                position: fixed;
+                top: 64px;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
                 gap: 0;
-                flex-wrap: wrap
+                padding: 16px 5% 28px;
+                border-bottom: 1px solid var(--border-l);
+                box-shadow: 0 12px 24px rgba(10,26,47,.06);
+                transform: translateY(-12px);
+                opacity: 0;
+                pointer-events: none;
+                transition: transform .25s, opacity .2s;
             }
+            .nav-links.open {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: auto;
+            }
+            .nav-links a {
+                padding: 14px 0;
+                font-size: 13px;
+                border-bottom: 1px solid rgba(10,26,47,.06);
+            }
+            .nav-links a::after { display: none; }
+        }
 
-            .hstat {
-                padding: 0 24px
-            }
+        @media(max-width:640px) {
+            nav { padding: 0 4%; height: 60px; }
+            .nav-logo img { height: 80px; }
+            .nav-links { top: 60px; }
 
-            .why-4 {
-                grid-template-columns: 1fr
-            }
+            section { padding: 56px 5%; }
+            .home-hero { padding: 60px 5% 0; }
+            .hero-content { padding: 56px 0 100px; }
 
-            .fg {
-                grid-template-columns: 1fr
-            }
+            .h-h1 { font-size: 42px; letter-spacing: -1px; line-height: 1.05; }
+            .h-desc { font-size: 14.5px; margin-bottom: 40px; }
+            .h-eyebrow { margin-bottom: 22px; }
 
-            .h-bgword {
-                display: none
-            }
+            .h-stats { gap: 0; flex-wrap: wrap; row-gap: 24px; }
+            .hstat { padding: 0 18px; }
+            .hstat:first-child { padding-left: 0; }
+            .hstat-n { font-size: 30px; }
+            .hstat-rule { display: none; }
 
-            .ind-full-wrap {
-                padding: 48px 4%
-            }
+            .why-4, .fg, .ct3, .mv2, .a2col, .steps3,
+            .ind-full-grid, .ind-2col, .ctd-inner,
+            .svc-2x2 { grid-template-columns: 1fr; }
 
-            .ctd {
-                padding: 56px 4%
-            }
+            .h-bgword { display: none; }
+            .h-blob, .h-accent1, .h-accent2 { opacity: .5; }
 
-            .svc-2x2 {
-                grid-template-columns: 1fr
-            }
+            .intro-strip { padding: 40px 5%; gap: 28px; }
+            .intro-metrics { gap: 28px; flex-wrap: wrap; justify-content: flex-start; }
+            .mbox-n { font-size: 32px; }
+
+            .stitle { font-size: 28px; letter-spacing: -.5px; }
+            .ssub { font-size: 14.5px; }
+
+            .ind-full-wrap { padding: 40px 5%; }
+            .ctd { padding: 48px 5%; }
+            .svc-block { padding: 36px 28px; }
+            .svc-ghost { font-size: 44px; }
+
+            .h-ticker { height: 38px; }
+            .ti { font-size: 9.5px; padding: 0 22px; letter-spacing: .18em; }
+        }
+
+        @media(max-width:420px) {
+            .h-h1 { font-size: 36px; }
+            .nav-logo img { height: 70px; }
+            .stitle { font-size: 24px; }
+            .hstat-n { font-size: 26px; }
+            .mbox-n { font-size: 28px; }
         }
     </style>
 </head>
@@ -1439,7 +1503,7 @@
     <!-- NAV -->
     <nav>
         <div class="nav-logo" onclick="go('home')"><img src="logo.png" alt="Aasterix Labs"></div>
-        <div class="nav-links">
+        <div class="nav-links" id="navLinks">
             <a id="n-home" onclick="go('home')" class="active">Home</a>
             <a id="n-about" onclick="go('about')">About</a>
             <a id="n-services" onclick="go('services')">Services</a>
@@ -1447,6 +1511,7 @@
             <a id="n-contact" onclick="go('contact')">Contact</a>
         </div>
         <div class="nav-cta" onclick="go('contact')">Get In Touch</div>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu" onclick="toggleNav()"><span></span><span></span><span></span></button>
     </nav>
 
     <!-- ══════════════ HOME ══════════════ -->
@@ -2284,6 +2349,13 @@
             document.getElementById('page-' + name).classList.add('active');
             document.getElementById('n-' + name).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            const links = document.getElementById('navLinks');
+            const btn = document.getElementById('navToggle');
+            if (links && btn) { links.classList.remove('open'); btn.classList.remove('open'); }
+        }
+        function toggleNav() {
+            document.getElementById('navLinks').classList.toggle('open');
+            document.getElementById('navToggle').classList.toggle('open');
         }
     </script>
 </body>
