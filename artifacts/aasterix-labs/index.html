@@ -81,22 +81,26 @@
             position: fixed;
             inset: 0 0 auto 0;
             z-index: 900;
-            background: var(--navy);
+            background: #ffffff;
             height: 64px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 5%;
+            border-bottom: 1px solid var(--border-l);
         }
 
         .nav-logo {
-            font-family: 'Sora', sans-serif;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: .18em;
-            text-transform: uppercase;
-            color: #fff;
+            display: flex;
+            align-items: center;
             cursor: pointer;
+        }
+
+        .nav-logo img {
+            height: 140px;
+            width: auto;
+            display: block;
+            object-fit: contain;
         }
 
         .nav-links {
@@ -110,7 +114,7 @@
             font-weight: 600;
             letter-spacing: .14em;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, .5);
+            color: rgba(10, 26, 47, .55);
             text-decoration: none;
             cursor: pointer;
             transition: color .2s;
@@ -134,7 +138,7 @@
 
         .nav-links a:hover,
         .nav-links a.active {
-            color: #fff;
+            color: var(--navy);
         }
 
         .nav-links a:hover::after,
@@ -1434,7 +1438,7 @@
 
     <!-- NAV -->
     <nav>
-        <div class="nav-logo" onclick="go('home')">Aasterix Labs</div>
+        <div class="nav-logo" onclick="go('home')"><img src="logo.png" alt="Aasterix Labs"></div>
         <div class="nav-links">
             <a id="n-home" onclick="go('home')" class="active">Home</a>
             <a id="n-about" onclick="go('about')">About</a>
