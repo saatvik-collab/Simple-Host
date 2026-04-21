@@ -1,0 +1,2287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aasterix Labs — Where Talent Meets Intelligence</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --navy: #0A1A2F;
+            --navy2: #0D2040;
+            --navy3: #102548;
+            --orange: #F97316;
+            --orange2: #FB923C;
+            --white: #FFFFFF;
+            --light: #F8FAFC;
+            --slate: #64748B;
+            --border: rgba(255, 255, 255, 0.06);
+            --border-l: #E2E8F0;
+            --grid: rgba(255, 255, 255, 0.045);
+            --grid-l: rgba(10, 26, 47, 0.045);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--white);
+            color: var(--navy);
+            overflow-x: hidden;
+        }
+
+        /* grid textures */
+        .gbg {
+            background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+            background-size: 52px 52px;
+        }
+
+        .gbg-l {
+            background-image: linear-gradient(var(--grid-l) 1px, transparent 1px), linear-gradient(90deg, var(--grid-l) 1px, transparent 1px);
+            background-size: 52px 52px;
+        }
+
+        /* page system */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: pi .35s ease;
+        }
+
+        @keyframes pi {
+            from {
+                opacity: 0;
+                transform: translateY(8px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 900;
+            background: var(--navy);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+        }
+
+        .nav-logo {
+            font-family: 'Sora', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            font-family: 'Sora', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .5);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color .2s;
+            position: relative;
+            padding-bottom: 3px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--orange);
+            border-radius: 2px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .25s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #fff;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            transform: scaleX(1);
+        }
+
+        .nav-cta {
+            font-family: 'Sora', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--orange);
+            cursor: pointer;
+            transition: opacity .2s;
+        }
+
+        .nav-cta:hover {
+            opacity: .75;
+        }
+
+        /* ── SHARED LABELS / TITLES ── */
+        .lbl {
+            font-family: 'Sora', sans-serif;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--orange);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .stitle {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(26px, 3.5vw, 40px);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            color: var(--navy);
+            margin-bottom: 16px;
+        }
+
+        .stitle em {
+            font-style: normal;
+            color: var(--orange);
+        }
+
+        .stitle-w {
+            color: #fff;
+        }
+
+        .ssub {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--slate);
+            max-width: 560px;
+        }
+
+        .ssub-w {
+            color: rgba(255, 255, 255, .45);
+        }
+
+        section {
+            padding: 88px 5%;
+        }
+
+        /* ── HOME HERO ── */
+        .home-hero {
+            min-height: 100vh;
+            background: var(--navy);
+            padding: 0 5%;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 64px;
+        }
+
+        .hbg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .h-accent1 {
+            position: absolute;
+            right: -100px;
+            top: -60px;
+            width: 520px;
+            height: 520px;
+            border: 1.5px solid rgba(249, 115, 22, .12);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .h-accent2 {
+            position: absolute;
+            right: -40px;
+            top: 0;
+            width: 340px;
+            height: 340px;
+            border: 1.5px solid rgba(249, 115, 22, .07);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .h-blob {
+            position: absolute;
+            right: 4%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(249, 115, 22, .14) 0%, transparent 68%);
+            pointer-events: none;
+        }
+
+        .h-bgword {
+            position: absolute;
+            right: -10px;
+            bottom: 44px;
+            font-family: 'Sora', sans-serif;
+            font-size: 160px;
+            font-weight: 800;
+            line-height: 1;
+            color: rgba(255, 255, 255, .025);
+            letter-spacing: -8px;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 680px;
+            padding: 80px 0 96px;
+        }
+
+        .h-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 32px;
+        }
+
+        .h-eline {
+            width: 32px;
+            height: 2px;
+            background: var(--orange);
+            border-radius: 2px;
+        }
+
+        .h-etext {
+            font-family: 'Sora', sans-serif;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--orange);
+        }
+
+        .h-h1 {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(50px, 7.5vw, 92px);
+            font-weight: 800;
+            line-height: 1.0;
+            color: #fff;
+            letter-spacing: -2.5px;
+            margin-bottom: 28px;
+        }
+
+        .h-h1 em {
+            font-style: normal;
+            color: var(--orange);
+            display: block;
+        }
+
+        .h-desc {
+            font-size: 16px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, .5);
+            max-width: 500px;
+            margin-bottom: 56px;
+        }
+
+        .h-stats {
+            display: flex;
+            gap: 0;
+        }
+
+        .hstat {
+            padding: 0 44px;
+        }
+
+        .hstat:first-child {
+            padding-left: 0;
+        }
+
+        .hstat-n {
+            font-family: 'Sora', sans-serif;
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1;
+            color: #fff;
+        }
+
+        .hstat-n b {
+            color: var(--orange);
+        }
+
+        .hstat-l {
+            font-size: 10.5px;
+            color: rgba(255, 255, 255, .35);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .hstat-rule {
+            width: 1px;
+            background: rgba(255, 255, 255, .1);
+            align-self: stretch;
+        }
+
+        /* ticker */
+        .h-ticker {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 44px;
+            background: var(--orange);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .ticker-track {
+            display: flex;
+            white-space: nowrap;
+            animation: tick 22s linear infinite;
+        }
+
+        @keyframes tick {
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        .ti {
+            font-family: 'Sora', sans-serif;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--navy);
+            padding: 0 32px;
+        }
+
+        .td {
+            color: rgba(10, 26, 47, .4);
+        }
+
+        /* ── HOME INTRO STRIP ── */
+        .intro-strip {
+            background: var(--light);
+            padding: 56px 5%;
+            display: flex;
+            gap: 80px;
+            align-items: center;
+            border-bottom: 1px solid var(--border-l);
+        }
+
+        .intro-text {
+            flex: 1;
+        }
+
+        .intro-text p {
+            font-size: 15.5px;
+            line-height: 1.85;
+            color: var(--slate);
+        }
+
+        .intro-metrics {
+            display: flex;
+            gap: 52px;
+            flex-shrink: 0;
+        }
+
+        .mbox {
+            text-align: center;
+        }
+
+        .mbox-n {
+            font-family: 'Sora', sans-serif;
+            font-size: 44px;
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1;
+        }
+
+        .mbox-n span {
+            color: var(--orange);
+        }
+
+        .mbox-l {
+            font-size: 10.5px;
+            color: var(--slate);
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            margin-top: 6px;
+        }
+
+        /* ── HOME SERVICES 2×2 ── */
+        .svc-2x2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            margin-top: 56px;
+            border: 1px solid var(--border-l);
+            overflow: hidden;
+        }
+
+        .svc-block {
+            padding: 48px 44px;
+            background: var(--white);
+            border-right: 1px solid var(--border-l);
+            border-bottom: 1px solid var(--border-l);
+            position: relative;
+            overflow: hidden;
+            transition: background .25s;
+        }
+
+        .svc-block:hover {
+            background: var(--light);
+        }
+
+        .svc-block:nth-child(2n) {
+            border-right: none;
+        }
+
+        .svc-block:nth-child(n+3) {
+            border-bottom: none;
+        }
+
+        .svc-ghost {
+            position: absolute;
+            top: 14px;
+            right: 24px;
+            font-family: 'Sora', sans-serif;
+            font-size: 60px;
+            font-weight: 800;
+            line-height: 1;
+            color: rgba(10, 26, 47, .055);
+            pointer-events: none;
+        }
+
+        .svc-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .svc-icon svg {
+            width: 26px;
+            height: 26px;
+            stroke: var(--orange);
+            fill: none;
+            stroke-width: 1.8;
+        }
+
+        .svc-block h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 21px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .svc-block p {
+            font-size: 14px;
+            line-height: 1.75;
+            color: var(--slate);
+            max-width: 340px;
+        }
+
+        .rowlist {
+            margin-top: 26px;
+        }
+
+        .row {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-l);
+        }
+
+        .rk {
+            font-family: 'Sora', sans-serif;
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--orange);
+            width: 54px;
+            flex-shrink: 0;
+        }
+
+        .rv {
+            font-size: 13px;
+            color: var(--slate);
+        }
+
+        /* ── WHY SECTION ── */
+        .why-sec {
+            background: var(--navy);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-inner {
+            position: relative;
+            z-index: 2;
+        }
+
+        .why-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            margin-top: 56px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .why-b {
+            padding: 40px 30px;
+            border-right: 1px solid var(--border);
+            position: relative;
+            transition: background .25s;
+        }
+
+        .why-b:last-child {
+            border-right: none;
+        }
+
+        .why-b:hover {
+            background: rgba(249, 115, 22, .05);
+        }
+
+        .why-bnum {
+            font-family: 'Sora', sans-serif;
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 18px;
+            color: rgba(249, 115, 22, .18);
+        }
+
+        .why-b h4 {
+            font-family: 'Sora', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .why-b p {
+            font-size: 13px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, .42);
+        }
+
+        /* ── HOME INDUSTRIES ── */
+        .ind-prev {
+            background: var(--light);
+        }
+
+        .ind-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 56px;
+        }
+
+        .ind-c {
+            background: var(--white);
+            border: 1px solid var(--border-l);
+            padding: 40px 36px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color .25s, transform .3s;
+        }
+
+        .ind-c:hover {
+            border-color: var(--orange);
+            transform: translateY(-4px);
+        }
+
+        .ind-ghost {
+            position: absolute;
+            bottom: -14px;
+            right: 12px;
+            font-family: 'Sora', sans-serif;
+            font-size: 70px;
+            font-weight: 800;
+            color: rgba(10, 26, 47, .05);
+            pointer-events: none;
+        }
+
+        .ind-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+
+        .ind-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--orange);
+            fill: none;
+            stroke-width: 1.8;
+        }
+
+        .ind-c h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 21px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .ind-c p {
+            font-size: 13.5px;
+            line-height: 1.75;
+            color: var(--slate);
+            max-width: 360px;
+        }
+
+        /* ── INNER HERO ── */
+        .ihero {
+            background: var(--navy);
+            padding: 130px 5% 80px;
+            position: relative;
+            overflow: hidden;
+            min-height: 360px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .ihero-bg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .ihero-glow {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 45%;
+            background: radial-gradient(ellipse at right, rgba(249, 115, 22, .1) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .ihero-c {
+            position: relative;
+            z-index: 2;
+        }
+
+        .ph1 {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(36px, 5.5vw, 64px);
+            font-weight: 800;
+            line-height: 1.05;
+            color: #fff;
+            letter-spacing: -1.5px;
+            margin-bottom: 16px;
+        }
+
+        .ph1 em {
+            font-style: normal;
+            color: var(--orange);
+        }
+
+        .psub {
+            font-size: 16px;
+            line-height: 1.75;
+            color: rgba(255, 255, 255, .45);
+            max-width: 540px;
+        }
+
+        /* ── ABOUT ── */
+        .a2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: start;
+            margin-top: 44px;
+        }
+
+        .a2col p {
+            font-size: 15px;
+            line-height: 1.85;
+            color: var(--slate);
+            margin-bottom: 16px;
+        }
+
+        .mv2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 56px;
+        }
+
+        .mvbox {
+            background: var(--light);
+            border: 1px solid var(--border-l);
+            padding: 44px 40px;
+        }
+
+        .mvbox-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .mvbox-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--orange);
+            fill: none;
+            stroke-width: 1.8;
+        }
+
+        .mvbox h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .mvbox p {
+            font-size: 14.5px;
+            line-height: 1.8;
+            color: var(--slate);
+        }
+
+        .approach-d {
+            background: var(--navy);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .approach-d .ad-inner {
+            position: relative;
+            z-index: 2;
+        }
+
+        .steps3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            margin-top: 56px;
+        }
+
+        .stepb {
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid var(--border);
+            padding: 44px 36px;
+            transition: background .25s;
+        }
+
+        .stepb:hover {
+            background: rgba(249, 115, 22, .05);
+        }
+
+        .stepn {
+            font-family: 'Sora', sans-serif;
+            font-size: 60px;
+            font-weight: 800;
+            color: rgba(249, 115, 22, .18);
+            line-height: 1;
+            margin-bottom: 18px;
+        }
+
+        .stepb h4 {
+            font-family: 'Sora', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .stepb p {
+            font-size: 13.5px;
+            line-height: 1.75;
+            color: rgba(255, 255, 255, .45);
+        }
+
+        /* ── SERVICES FULL ── */
+        .svc-full {
+            background: var(--white);
+        }
+
+        .sfitem {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 56px;
+            align-items: start;
+            padding: 64px 0;
+            border-bottom: 1px solid var(--border-l);
+        }
+
+        .sfitem:last-child {
+            border-bottom: none;
+        }
+
+        .sf-left {}
+
+        .sf-bignum {
+            font-family: 'Sora', sans-serif;
+            font-size: 84px;
+            font-weight: 800;
+            color: rgba(10, 26, 47, .06);
+            line-height: 1;
+            margin-bottom: 14px;
+        }
+
+        .sf-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sf-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--orange);
+            fill: none;
+            stroke-width: 1.6;
+        }
+
+        .sf-right h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(24px, 3vw, 34px);
+            font-weight: 800;
+            color: var(--navy);
+            letter-spacing: -.5px;
+            margin-bottom: 18px;
+        }
+
+        .sf-right p {
+            font-size: 15px;
+            line-height: 1.85;
+            color: var(--slate);
+            margin-bottom: 28px;
+        }
+
+        .drows {}
+
+        .drow {
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+            padding: 11px 0;
+            border-top: 1px solid var(--border-l);
+        }
+
+        .drow .dk {
+            font-family: 'Sora', sans-serif;
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--orange);
+            width: 58px;
+            flex-shrink: 0;
+        }
+
+        .drow .dv {
+            font-size: 13.5px;
+            color: var(--slate);
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .tag {
+            padding: 5px 14px;
+            background: var(--light);
+            border: 1px solid var(--border-l);
+            font-family: 'Sora', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--slate);
+        }
+
+        /* ── INDUSTRIES FULL ── */
+        .ind-full-wrap {
+            padding: 80px 5%;
+            background: var(--white);
+        }
+
+        .ind-full-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .ifc {
+            background: var(--white);
+            border: 1px solid var(--border-l);
+            padding: 52px 44px;
+            position: relative;
+            overflow: hidden;
+            transition: transform .3s, box-shadow .3s;
+        }
+
+        .ifc:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 48px rgba(10, 26, 47, .08);
+        }
+
+        .ifc-ghost {
+            position: absolute;
+            top: -12px;
+            right: 14px;
+            font-family: 'Sora', sans-serif;
+            font-size: 90px;
+            font-weight: 800;
+            color: rgba(10, 26, 47, .05);
+            pointer-events: none;
+        }
+
+        .ifc-num {
+            font-family: 'Sora', sans-serif;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: rgba(10, 26, 47, .2);
+            margin-bottom: 28px;
+            display: block;
+        }
+
+        .ifc-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+
+        .ifc-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--orange);
+            fill: none;
+            stroke-width: 1.8;
+        }
+
+        .ifc h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(22px, 2.5vw, 28px);
+            font-weight: 800;
+            color: var(--navy);
+            letter-spacing: -.5px;
+            margin-bottom: 14px;
+        }
+
+        .ifc>p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--slate);
+            margin-bottom: 28px;
+        }
+
+        .irows {}
+
+        .irow {
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-l);
+        }
+
+        .irow .dk {
+            font-family: 'Sora', sans-serif;
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--orange);
+            width: 54px;
+            flex-shrink: 0;
+        }
+
+        .irow .dv {
+            font-size: 13px;
+            color: var(--slate);
+        }
+
+        /* ── CONTACT ── */
+        .ct3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 56px;
+        }
+
+        .ctbox {
+            background: var(--light);
+            border: 1px solid var(--border-l);
+            padding: 44px 36px;
+        }
+
+        .ctbox-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .ctbox-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--orange);
+            fill: none;
+            stroke-width: 1.8;
+        }
+
+        .ctbox h4 {
+            font-family: 'Sora', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .ctbox p,
+        .ctbox a {
+            font-size: 14.5px;
+            color: var(--slate);
+            line-height: 1.7;
+            text-decoration: none;
+            display: block;
+        }
+
+        .ctbox a:hover {
+            color: var(--orange);
+        }
+
+        .ctd {
+            background: var(--navy);
+            padding: 80px 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ctd-inner {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .ctd h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(28px, 4vw, 46px);
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .ctd h2 em {
+            font-style: normal;
+            color: var(--orange);
+        }
+
+        .ctd p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, .45);
+        }
+
+        .cib-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .cib {
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--border);
+            padding: 26px 30px;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            transition: background .25s;
+        }
+
+        .cib:hover {
+            background: rgba(249, 115, 22, .06);
+        }
+
+        .cib-icon {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .cib-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--orange);
+            fill: none;
+            stroke-width: 1.8;
+        }
+
+        .cib-lbl {
+            font-family: 'Sora', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .3);
+            margin-bottom: 4px;
+        }
+
+        .cib-val {
+            font-size: 13.5px;
+            color: rgba(255, 255, 255, .65);
+            line-height: 1.6;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--navy);
+            padding: 60px 5% 30px;
+            border-top: 1px solid var(--border);
+        }
+
+        .fg {
+            display: grid;
+            grid-template-columns: 1.8fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .fw {
+            font-family: 'Sora', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .fbrand p {
+            font-size: 13px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, .35);
+            max-width: 240px;
+        }
+
+        .fbrand .sub {
+            font-size: 10.5px;
+            letter-spacing: .06em;
+            color: rgba(255, 255, 255, .18);
+            text-transform: uppercase;
+            margin-top: 8px;
+            font-family: 'Sora', sans-serif;
+        }
+
+        .fcol h5 {
+            font-family: 'Sora', sans-serif;
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .28);
+            margin-bottom: 18px;
+        }
+
+        .fcol ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .fcol ul li {
+            font-family: 'Sora', sans-serif;
+            font-size: 13px;
+            color: rgba(255, 255, 255, .48);
+            cursor: pointer;
+            transition: color .2s;
+            font-weight: 500;
+        }
+
+        .fcol ul li:hover {
+            color: #fff;
+        }
+
+        .fcol ul li.b {
+            font-weight: 700;
+            color: rgba(255, 255, 255, .7);
+        }
+
+        .fbot {
+            border-top: 1px solid var(--border);
+            padding-top: 26px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .fbot p {
+            font-size: 11px;
+            color: rgba(255, 255, 255, .22);
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            font-family: 'Sora', sans-serif;
+        }
+
+        .farrow {
+            width: 50px;
+            height: 50px;
+            background: var(--orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity .2s;
+        }
+
+        .farrow:hover {
+            opacity: .8;
+        }
+
+        .farrow svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--navy);
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:960px) {
+            .why-4 {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .sfitem {
+                grid-template-columns: 1fr;
+                gap: 20px
+            }
+
+            .ind-full-grid {
+                grid-template-columns: 1fr
+            }
+
+            .ind-2col {
+                grid-template-columns: 1fr
+            }
+
+            .a2col {
+                grid-template-columns: 1fr
+            }
+
+            .steps3 {
+                grid-template-columns: 1fr
+            }
+
+            .ctd-inner {
+                grid-template-columns: 1fr
+            }
+
+            .fg {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .mv2 {
+                grid-template-columns: 1fr
+            }
+
+            .ct3 {
+                grid-template-columns: 1fr
+            }
+
+            .intro-strip {
+                flex-direction: column;
+                gap: 40px
+            }
+
+            .svc-2x2 {
+                grid-template-columns: 1fr
+            }
+        }
+
+        @media(max-width:640px) {
+            nav {
+                padding: 0 4%
+            }
+
+            .nav-links {
+                gap: 18px
+            }
+
+            .nav-links a {
+                font-size: 10px;
+                letter-spacing: .09em
+            }
+
+            section {
+                padding: 64px 4%
+            }
+
+            .h-h1 {
+                font-size: 44px;
+                letter-spacing: -1px
+            }
+
+            .h-stats {
+                gap: 0;
+                flex-wrap: wrap
+            }
+
+            .hstat {
+                padding: 0 24px
+            }
+
+            .why-4 {
+                grid-template-columns: 1fr
+            }
+
+            .fg {
+                grid-template-columns: 1fr
+            }
+
+            .h-bgword {
+                display: none
+            }
+
+            .ind-full-wrap {
+                padding: 48px 4%
+            }
+
+            .ctd {
+                padding: 56px 4%
+            }
+
+            .svc-2x2 {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-logo" onclick="go('home')">Aasterix Labs</div>
+        <div class="nav-links">
+            <a id="n-home" onclick="go('home')" class="active">Home</a>
+            <a id="n-about" onclick="go('about')">About</a>
+            <a id="n-services" onclick="go('services')">Services</a>
+            <a id="n-industries" onclick="go('industries')">Industries</a>
+            <a id="n-contact" onclick="go('contact')">Contact</a>
+        </div>
+        <div class="nav-cta" onclick="go('contact')">Get In Touch</div>
+    </nav>
+
+    <!-- ══════════════ HOME ══════════════ -->
+    <div class="page active" id="page-home">
+
+        <!-- HERO -->
+        <div class="home-hero">
+            <div class="hbg gbg"></div>
+            <div class="h-accent1"></div>
+            <div class="h-accent2"></div>
+            <div class="h-blob"></div>
+            <div class="h-bgword">TALENT</div>
+            <div class="hero-content">
+                <div class="h-eyebrow">
+                    <div class="h-eline"></div><span class="h-etext">Precision Talent Solutions</span>
+                </div>
+                <h1 class="h-h1">Where Talent<br>Meets <em>Intelligence</em></h1>
+                <p class="h-desc">Connecting organizations with exceptional professionals across healthcare, technology,
+                    and enterprise sectors through scalable, intelligence-driven workforce solutions.</p>
+                <div class="h-stats">
+                    <div class="hstat">
+                        <div class="hstat-n">500<b>+</b></div>
+                        <div class="hstat-l">Placements</div>
+                    </div>
+                    <div class="hstat-rule"></div>
+                    <div class="hstat">
+                        <div class="hstat-n">4<b>+</b></div>
+                        <div class="hstat-l">Industry Verticals</div>
+                    </div>
+                    <div class="hstat-rule"></div>
+                    <div class="hstat">
+                        <div class="hstat-n">98<b>%</b></div>
+                        <div class="hstat-l">Client Satisfaction</div>
+                    </div>
+                </div>
+            </div>
+            <div class="h-ticker">
+                <div class="ticker-track">
+                    <span class="ti">Healthcare Staffing</span><span class="td">—</span>
+                    <span class="ti">IT & Engineering</span><span class="td">—</span>
+                    <span class="ti">Talent Consulting</span><span class="td">—</span>
+                    <span class="ti">Contract Hiring</span><span class="td">—</span>
+                    <span class="ti">Scalable Workforce</span><span class="td">—</span>
+                    <span class="ti">Precision Recruitment</span><span class="td">—</span>
+                    <span class="ti">Enterprise Solutions</span><span class="td">—</span>
+                    <span class="ti">Healthcare Staffing</span><span class="td">—</span>
+                    <span class="ti">IT & Engineering</span><span class="td">—</span>
+                    <span class="ti">Talent Consulting</span><span class="td">—</span>
+                    <span class="ti">Contract Hiring</span><span class="td">—</span>
+                    <span class="ti">Scalable Workforce</span><span class="td">—</span>
+                    <span class="ti">Precision Recruitment</span><span class="td">—</span>
+                    <span class="ti">Enterprise Solutions</span><span class="td">—</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- INTRO -->
+        <div class="intro-strip">
+            <div class="intro-text">
+                <span class="lbl">Who We Are</span>
+                <p>Aasterix Labs is a precision-driven talent solutions company delivering scalable workforce outcomes.
+                    We connect organizations with highly skilled professionals across healthcare, technology, and
+                    enterprise sectors through intelligent, structured recruitment methodologies.</p>
+            </div>
+            <div class="intro-metrics">
+                <div class="mbox">
+                    <div class="mbox-n">4<span>+</span></div>
+                    <div class="mbox-l">Sectors Served</div>
+                </div>
+                <div class="mbox">
+                    <div class="mbox-n">100<span>%</span></div>
+                    <div class="mbox-l">Dedicated Focus</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SERVICES -->
+        <section>
+            <span class="lbl">What We Do</span>
+            <h2 class="stitle">Our <em>Services</em></h2>
+            <p class="ssub">Four focused service lines built to deliver the right talent at every scale.</p>
+            <div class="svc-2x2">
+                <div class="svc-block">
+                    <div class="svc-ghost">01</div>
+                    <div class="svc-icon"><svg viewBox="0 0 24 24">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                        </svg></div>
+                    <h3>Healthcare Staffing</h3>
+                    <p>Clinical and non-clinical workforce solutions for hospitals, clinics, and integrated health
+                        systems requiring credentialed professionals.</p>
+                    <div class="rowlist">
+                        <div class="row"><span class="rk">CORE</span><span class="rv">Registered Nurses & Allied
+                                Health</span></div>
+                        <div class="row"><span class="rk">SCALE</span><span class="rv">Travel & Contract Staffing</span>
+                        </div>
+                        <div class="row"><span class="rk">FOCUS</span><span class="rv">Compliance & Credentialing</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="svc-block">
+                    <div class="svc-ghost">02</div>
+                    <div class="svc-icon"><svg viewBox="0 0 24 24">
+                            <rect x="2" y="3" width="20" height="14" rx="2" />
+                            <path d="M8 21h8M12 17v4" />
+                        </svg></div>
+                    <h3>IT & Engineering Staffing</h3>
+                    <p>High-caliber software engineers, data specialists, cloud architects and DevOps professionals
+                        sourced for rapid deployment.</p>
+                    <div class="rowlist">
+                        <div class="row"><span class="rk">CORE</span><span class="rv">Software & Data Engineering</span>
+                        </div>
+                        <div class="row"><span class="rk">SCALE</span><span class="rv">Cloud & Infrastructure
+                                Teams</span></div>
+                        <div class="row"><span class="rk">FOCUS</span><span class="rv">Speed & Technical Depth</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="svc-block">
+                    <div class="svc-ghost">03</div>
+                    <div class="svc-icon"><svg viewBox="0 0 24 24">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+                        </svg></div>
+                    <h3>Contract & Permanent Hiring</h3>
+                    <p>Flexible placement structures — from short-term contracts to permanent hires — built around your
+                        workforce strategy.</p>
+                    <div class="rowlist">
+                        <div class="row"><span class="rk">CORE</span><span class="rv">Contract & C2H Placements</span>
+                        </div>
+                        <div class="row"><span class="rk">SCALE</span><span class="rv">Direct & Executive Search</span>
+                        </div>
+                        <div class="row"><span class="rk">FOCUS</span><span class="rv">Flexibility & Fit</span></div>
+                    </div>
+                </div>
+                <div class="svc-block">
+                    <div class="svc-ghost">04</div>
+                    <div class="svc-icon"><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                        </svg></div>
+                    <h3>Talent Consulting</h3>
+                    <p>Strategic workforce planning, hiring roadmaps, and recruitment consulting to align talent
+                        strategy with business objectives.</p>
+                    <div class="rowlist">
+                        <div class="row"><span class="rk">CORE</span><span class="rv">Workforce Planning</span></div>
+                        <div class="row"><span class="rk">SCALE</span><span class="rv">Hiring Process Design</span>
+                        </div>
+                        <div class="row"><span class="rk">FOCUS</span><span class="rv">Market Intelligence</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY -->
+        <section class="why-sec">
+            <div class="hbg gbg" style="position:absolute;inset:0;pointer-events:none"></div>
+            <div class="why-inner">
+                <span class="lbl">Why Aasterix Labs</span>
+                <h2 class="stitle stitle-w">The Aasterix <em>Advantage</em></h2>
+                <div class="why-4">
+                    <div class="why-b">
+                        <div class="why-bnum">01</div>
+                        <h4>Structured Delivery Model</h4>
+                        <p>A disciplined, repeatable hiring framework ensuring consistent quality outcomes on every
+                            engagement.</p>
+                    </div>
+                    <div class="why-b">
+                        <div class="why-bnum">02</div>
+                        <h4>High-Quality Talent Pipeline</h4>
+                        <p>Pre-vetted, continuously refreshed talent networks across all major professional domains.</p>
+                    </div>
+                    <div class="why-b">
+                        <div class="why-bnum">03</div>
+                        <h4>Scalable Hiring Solutions</h4>
+                        <p>From single placements to large workforce programs — our model scales with your growth.</p>
+                    </div>
+                    <div class="why-b">
+                        <div class="why-bnum">04</div>
+                        <h4>Industry-Focused Expertise</h4>
+                        <p>Deep domain knowledge across healthcare, technology, engineering, and enterprise
+                            organizations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INDUSTRIES PREVIEW -->
+        <section class="ind-prev">
+            <span class="lbl">Industries We Serve</span>
+            <h2 class="stitle">Built for <em>Every Sector</em></h2>
+            <p class="ssub">Deep domain expertise across the verticals that power the modern economy.</p>
+            <div class="ind-2col">
+                <div class="ind-c">
+                    <div class="ind-ghost">01</div>
+                    <div class="ind-icon"><svg viewBox="0 0 24 24">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                        </svg></div>
+                    <h3>Healthcare</h3>
+                    <p>Clinical and allied health workforce solutions for modern healthcare systems requiring compliant,
+                        credentialed professionals.</p>
+                </div>
+                <div class="ind-c">
+                    <div class="ind-ghost">02</div>
+                    <div class="ind-icon"><svg viewBox="0 0 24 24">
+                            <rect x="2" y="3" width="20" height="14" rx="2" />
+                            <path d="M8 21h8M12 17v4" />
+                        </svg></div>
+                    <h3>Technology</h3>
+                    <p>Engineering and software talent for the world's most innovative technology companies and
+                        digital-first enterprises.</p>
+                </div>
+                <div class="ind-c">
+                    <div class="ind-ghost">03</div>
+                    <div class="ind-icon"><svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="3" />
+                            <path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14" />
+                        </svg></div>
+                    <h3>Engineering</h3>
+                    <p>Mechanical, civil, and industrial engineering professionals for complex infrastructure and
+                        manufacturing initiatives.</p>
+                </div>
+                <div class="ind-c">
+                    <div class="ind-ghost">04</div>
+                    <div class="ind-icon"><svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg></div>
+                    <h3>Corporate Enterprise</h3>
+                    <p>Corporate and operations talent supporting Fortune 500 and high-growth enterprises scaling their
+                        professional workforce.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="fg">
+                <div class="fbrand">
+                    <div class="fw">Aasterix Labs</div>
+                    <p>Precision-driven talent solutions delivering scalable workforce outcomes across healthcare,
+                        technology, and enterprise sectors.</p>
+                    <p class="sub">Architectural Precision in Talent.</p>
+                </div>
+                <div class="fcol">
+                    <h5>Navigation</h5>
+                    <ul>
+                        <li onclick="go('services')">Services</li>
+                        <li onclick="go('industries')" class="b">Industries</li>
+                        <li onclick="go('about')">About</li>
+                    </ul>
+                </div>
+                <div class="fcol">
+                    <h5>Company</h5>
+                    <ul>
+                        <li onclick="go('about')">About Us</li>
+                        <li onclick="go('contact')">Contact</li>
+                    </ul>
+                </div>
+                <div class="fcol">
+                    <h5>Contact</h5>
+                    <ul>
+                        <li>info@aasterixlabs.com</li>
+                        <li>United States</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fbot">
+                <p>© 2024 Aasterix Labs. Architectural Precision in Talent.</p>
+                <div class="farrow" onclick="window.scrollTo({top:0,behavior:'smooth'})"><svg viewBox="0 0 24 24">
+                        <path d="M18 15l-6-6-6 6" />
+                    </svg></div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ══════════════ ABOUT ══════════════ -->
+    <div class="page" id="page-about">
+        <div class="ihero">
+            <div class="ihero-bg gbg"></div>
+            <div class="ihero-glow"></div>
+            <div class="ihero-c">
+                <span class="lbl">Our Story</span>
+                <h1 class="ph1">About <em>Aasterix Labs</em></h1>
+                <p class="psub">A talent solutions company built on precision, intelligence, and an unwavering
+                    commitment to exceptional workforce outcomes.</p>
+            </div>
+        </div>
+
+        <section>
+            <span class="lbl">Company Overview</span>
+            <h2 class="stitle">Who We <em>Are</em></h2>
+            <div class="a2col">
+                <div>
+                    <p>Aasterix Labs is a precision-driven talent solutions company focused on delivering high-quality
+                        workforce outcomes for organizations across industries. Founded on the belief that the right
+                        talent drives transformational growth, we combine deep industry knowledge with intelligent
+                        recruitment methodologies.</p>
+                    <p>We serve as a strategic partner for organizations seeking to build exceptional teams — whether
+                        for a single critical hire or a full-scale workforce expansion program.</p>
+                    <p>From healthcare systems to technology startups, from engineering firms to enterprise
+                        corporations, Aasterix Labs delivers talent solutions that scale with your ambitions.</p>
+                </div>
+                <div>
+                    <p>Our structured hiring methodology ensures every placement aligns with your organization's
+                        strategic objectives, culture, and long-term growth trajectory. We don't just fill roles — we
+                        architect workforce solutions.</p>
+                    <p>Our team brings domain expertise across multiple verticals, allowing us to understand the nuanced
+                        requirements of each industry we serve and match talent with precision.</p>
+                    <p>Every engagement is approached with the same rigor: deep discovery, structured sourcing, rigorous
+                        vetting, and dedicated delivery management.</p>
+                </div>
+            </div>
+            <div class="mv2">
+                <div class="mvbox">
+                    <div class="mvbox-icon"><svg viewBox="0 0 24 24">
+                            <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg></div>
+                    <h3>Our Mission</h3>
+                    <p>"To connect organizations with exceptional talent through intelligent recruitment strategies that
+                        align people, purpose, and performance."</p>
+                </div>
+                <div class="mvbox">
+                    <div class="mvbox-icon"><svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" />
+                            <path
+                                d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+                        </svg></div>
+                    <h3>Our Vision</h3>
+                    <p>"To become a trusted partner for scalable global workforce solutions — driving organizational
+                        success through precision talent intelligence."</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="approach-d">
+            <div class="hbg gbg" style="position:absolute;inset:0;pointer-events:none"></div>
+            <div class="ad-inner">
+                <span class="lbl">How We Work</span>
+                <h2 class="stitle stitle-w">Our Hiring <em>Methodology</em></h2>
+                <p class="ssub ssub-w">A structured, three-phase approach that guarantees quality at every stage of the
+                    talent acquisition lifecycle.</p>
+                <div class="steps3">
+                    <div class="stepb">
+                        <div class="stepn">01</div>
+                        <h4>Talent Sourcing</h4>
+                        <p>We leverage proprietary networks, industry databases, and targeted outreach to identify
+                            candidates matching your specific requirements and organizational culture.</p>
+                    </div>
+                    <div class="stepb">
+                        <div class="stepn">02</div>
+                        <h4>Rigorous Screening</h4>
+                        <p>Every candidate undergoes comprehensive multi-stage vetting including skills assessment,
+                            background verification, reference checks, and cultural fit evaluation.</p>
+                    </div>
+                    <div class="stepb">
+                        <div class="stepn">03</div>
+                        <h4>Workforce Delivery</h4>
+                        <p>We manage the full placement process from offer negotiation through onboarding, with
+                            dedicated support ensuring seamless integration and long-term retention.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="fg">
+                <div class="fbrand">
+                    <div class="fw">Aasterix Labs</div>
+                    <p>Precision-driven talent solutions delivering scalable workforce outcomes.</p>
+                    <p class="sub">Architectural Precision in Talent.</p>
+                </div>
+                <div class="fcol">
+                    <h5>Navigation</h5>
+                    <ul>
+                        <li onclick="go('services')">Services</li>
+                        <li onclick="go('industries')">Industries</li>
+                    </ul>
+                </div>
+                <div class="fcol">
+                    <h5>Company</h5>
+                    <ul>
+                        <li onclick="go('about')" class="b">About Us</li>
+                        <li onclick="go('contact')">Contact</li>
+                    </ul>
+                </div>
+                <div class="fcol">
+                    <h5>Contact</h5>
+                    <ul>
+                        <li>info@aasterixlabs.com</li>
+                        <li>United States</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fbot">
+                <p>© 2024 Aasterix Labs. Architectural Precision in Talent.</p>
+                <div class="farrow" onclick="window.scrollTo({top:0,behavior:'smooth'})"><svg viewBox="0 0 24 24">
+                        <path d="M18 15l-6-6-6 6" />
+                    </svg></div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ══════════════ SERVICES ══════════════ -->
+    <div class="page" id="page-services">
+        <div class="ihero">
+            <div class="ihero-bg gbg"></div>
+            <div class="ihero-glow"></div>
+            <div class="ihero-c">
+                <span class="lbl">What We Offer</span>
+                <h1 class="ph1">Our <em>Services</em></h1>
+                <p class="psub">Comprehensive, precision-engineered talent acquisition across every stage of the hiring
+                    lifecycle.</p>
+            </div>
+        </div>
+
+        <section class="svc-full">
+            <div class="sfitem">
+                <div class="sf-left">
+                    <div class="sf-bignum">01</div>
+                    <div class="sf-icon"><svg viewBox="0 0 24 24">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                        </svg></div><span class="lbl" style="margin-top:14px;">Staffing</span>
+                </div>
+                <div class="sf-right">
+                    <h2>Healthcare Staffing</h2>
+                    <p>Aasterix Labs provides skilled healthcare professionals and comprehensive clinical workforce
+                        support to hospitals, clinics, and healthcare networks. We understand the unique regulatory,
+                        credentialing, and operational demands of healthcare environments — delivering talent that meets
+                        the highest patient-care standards.</p>
+                    <div class="drows">
+                        <div class="drow"><span class="dk">CORE</span><span class="dv">Registered Nurses, Allied Health,
+                                Clinical Staff</span></div>
+                        <div class="drow"><span class="dk">SCALE</span><span class="dv">Travel Nursing, Per Diem,
+                                Long-Term Contracts</span></div>
+                        <div class="drow"><span class="dk">FOCUS</span><span class="dv">Credentialing Compliance &
+                                Patient Safety Standards</span></div>
+                        <div class="drow"><span class="dk">REACH</span><span class="dv">Acute Care, Ambulatory,
+                                Behavioral Health, LTC</span></div>
+                    </div>
+                    <div class="tags"><span class="tag">RN Staffing</span><span class="tag">Allied Health</span><span
+                            class="tag">Medical Tech</span><span class="tag">Healthcare Admin</span><span
+                            class="tag">Travel Nurses</span></div>
+                </div>
+            </div>
+            <div class="sfitem">
+                <div class="sf-left">
+                    <div class="sf-bignum">02</div>
+                    <div class="sf-icon"><svg viewBox="0 0 24 24">
+                            <rect x="2" y="3" width="20" height="14" rx="2" />
+                            <path d="M8 21h8M12 17v4" />
+                        </svg></div><span class="lbl" style="margin-top:14px;">Technology</span>
+                </div>
+                <div class="sf-right">
+                    <h2>IT & Engineering Staffing</h2>
+                    <p>Talent sourcing for software engineers, data engineers, cloud specialists, DevOps professionals,
+                        and cybersecurity experts. We serve both product companies and enterprise technology
+                        organizations, enabling rapid deployment of precisely matched technical talent.</p>
+                    <div class="drows">
+                        <div class="drow"><span class="dk">CORE</span><span class="dv">Software Engineers, Data
+                                Engineers, ML Engineers</span></div>
+                        <div class="drow"><span class="dk">SCALE</span><span class="dv">Cloud Architects, DevOps,
+                                Platform Engineering</span></div>
+                        <div class="drow"><span class="dk">FOCUS</span><span class="dv">Technical Depth & Rapid
+                                Deployment</span></div>
+                        <div class="drow"><span class="dk">REACH</span><span class="dv">Startups to Fortune 500
+                                Technology Organizations</span></div>
+                    </div>
+                    <div class="tags"><span class="tag">Software Eng</span><span class="tag">Data Science</span><span
+                            class="tag">Cloud & Infra</span><span class="tag">Cybersecurity</span><span class="tag">ML /
+                            AI</span></div>
+                </div>
+            </div>
+            <div class="sfitem">
+                <div class="sf-left">
+                    <div class="sf-bignum">03</div>
+                    <div class="sf-icon"><svg viewBox="0 0 24 24">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+                        </svg></div><span class="lbl" style="margin-top:14px;">Flexible Hiring</span>
+                </div>
+                <div class="sf-right">
+                    <h2>Contract & Permanent Hiring</h2>
+                    <p>Flexible hiring solutions for both temporary and long-term workforce needs. Whether your
+                        organization needs specialized contractors, contract-to-hire arrangements, or direct permanent
+                        placements, Aasterix Labs structures every engagement around your strategy and budget.</p>
+                    <div class="drows">
+                        <div class="drow"><span class="dk">CORE</span><span class="dv">Contract Staffing, C2H
+                                Arrangements</span></div>
+                        <div class="drow"><span class="dk">SCALE</span><span class="dv">Direct Placement, Executive
+                                Search</span></div>
+                        <div class="drow"><span class="dk">FOCUS</span><span class="dv">Workforce Flexibility &
+                                Long-Term Retention</span></div>
+                    </div>
+                    <div class="tags"><span class="tag">Contract</span><span class="tag">C2H</span><span
+                            class="tag">Direct Hire</span><span class="tag">Executive Search</span><span
+                            class="tag">Project-Based</span></div>
+                </div>
+            </div>
+            <div class="sfitem">
+                <div class="sf-left">
+                    <div class="sf-bignum">04</div>
+                    <div class="sf-icon"><svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                        </svg></div><span class="lbl" style="margin-top:14px;">Advisory</span>
+                </div>
+                <div class="sf-right">
+                    <h2>Talent Consulting</h2>
+                    <p>Strategic workforce planning, hiring roadmap design, and recruitment consulting services for HR
+                        leaders and executive teams. We provide workforce gap analysis, employer brand positioning,
+                        hiring process optimization, and talent market intelligence.</p>
+                    <div class="drows">
+                        <div class="drow"><span class="dk">CORE</span><span class="dv">Workforce Planning, Hiring
+                                Strategy Design</span></div>
+                        <div class="drow"><span class="dk">SCALE</span><span class="dv">Process Optimization, Market
+                                Intelligence</span></div>
+                        <div class="drow"><span class="dk">FOCUS</span><span class="dv">Strategic Alignment & Employer
+                                Branding</span></div>
+                    </div>
+                    <div class="tags"><span class="tag">Workforce Planning</span><span class="tag">Hiring
+                            Strategy</span><span class="tag">Market Intel</span><span class="tag">Employer Brand</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="fg">
+                <div class="fbrand">
+                    <div class="fw">Aasterix Labs</div>
+                    <p>Precision-driven talent solutions delivering scalable workforce outcomes.</p>
+                    <p class="sub">Architectural Precision in Talent.</p>
+                </div>
+                <div class="fcol">
+                    <h5>Navigation</h5>
+                    <ul>
+                        <li onclick="go('services')" class="b">Services</li>
+                        <li onclick="go('industries')">Industries</li>
+                    </ul>
+                </div>
+                <div class="fcol">
+                    <h5>Company</h5>
+                    <ul>
+                        <li onclick="go('about')">About Us</li>
+                        <li onclick="go('contact')">Contact</li>
+                    </ul>
+                </div>
+                <div class="fcol">
+                    <h5>Contact</h5>
+                    <ul>
+                        <li>info@aasterixlabs.com</li>
+                        <li>United States</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fbot">
+                <p>© 2024 Aasterix Labs. Architectural Precision in Talent.</p>
+                <div class="farrow" onclick="window.scrollTo({top:0,behavior:'smooth'})"><svg viewBox="0 0 24 24">
+                        <path d="M18 15l-6-6-6 6" />
+                    </svg></div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ══════════════ INDUSTRIES ══════════════ -->
+    <div class="page" id="page-industries">
+        <div class="ihero">
+            <div class="ihero-bg gbg"></div>
+            <div class="ihero-glow"></div>
+            <div class="ihero-c">
+                <span class="lbl">Sector Expertise</span>
+                <h1 class="ph1">Engineered for<br><em>Complex Verticals</em></h1>
+                <p class="psub">We deliver architectural precision and technical mastery across high-stakes industries,
+                    transforming operational challenges into strategic monolithic systems.</p>
+            </div>
+        </div>
+
+        <div class="ind-full-wrap">
+            <div class="ind-full-grid">
+                <div class="ifc">
+                    <div class="ifc-ghost">01</div>
+                    <span class="ifc-num">01 — SECTOR</span>
+                    <div class="ifc-icon"><svg viewBox="0 0 24 24">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                        </svg></div>
+                    <h2>Healthcare</h2>
+                    <p>Precision staffing for critical medical infrastructure. We place resilient, compliant healthcare
+                        professionals across clinical settings supporting life-saving technologies and operations.</p>
+                    <div class="irows">
+                        <div class="irow"><span class="dk">CORE</span><span class="dv">Secure Clinical Workforce
+                                Placement</span></div>
+                        <div class="irow"><span class="dk">SCALE</span><span class="dv">Interoperability Across Health
+                                Systems</span></div>
+                        <div class="irow"><span class="dk">FOCUS</span><span class="dv">Compliance & Reliability</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ifc">
+                    <div class="ifc-ghost">02</div>
+                    <span class="ifc-num">02 — SECTOR</span>
+                    <div class="ifc-icon"><svg viewBox="0 0 24 24">
+                            <rect x="2" y="3" width="20" height="14" rx="2" />
+                            <path d="M8 21h8M12 17v4" />
+                        </svg></div>
+                    <h2>Technology</h2>
+                    <p>Building the frameworks of tomorrow. Our solutions for tech companies focus on high-throughput,
+                        low-latency talent pipelines capable of supporting massive parallel scaling.</p>
+                    <div class="irows">
+                        <div class="irow"><span class="dk">CORE</span><span class="dv">Distributed Systems Talent</span>
+                        </div>
+                        <div class="irow"><span class="dk">SCALE</span><span class="dv">Cloud-Native
+                                Architectures</span></div>
+                        <div class="irow"><span class="dk">FOCUS</span><span class="dv">Performance & Agility</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ifc">
+                    <div class="ifc-ghost">03</div>
+                    <span class="ifc-num">03 — SECTOR</span>
+                    <div class="ifc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            style="stroke:var(--orange)">
+                            <path d="M12 3L3 20h18L12 3z" />
+                            <path d="M7.5 14h9" />
+                        </svg></div>
+                    <h2>Engineering</h2>
+                    <p>Digital twins and industrial systems expertise. We map physical engineering complexity into
+                        digital environments, ensuring operational clarity and predictive workforce delivery.</p>
+                    <div class="irows">
+                        <div class="irow"><span class="dk">CORE</span><span class="dv">IoT Integration
+                                Specialists</span></div>
+                        <div class="irow"><span class="dk">SCALE</span><span class="dv">Predictive Analytics
+                                Talent</span></div>
+                        <div class="irow"><span class="dk">FOCUS</span><span class="dv">Safety & Efficiency</span></div>
+                    </div>
+                </div>
+                <div class="ifc">
+                    <div class="ifc-ghost">04</div>
+                    <span class="ifc-num">04 — SECTOR</span>
+                    <div class="ifc-icon"><svg viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="7" height="7" />
+                            <rect x="14" y="3" width="7" height="7" />
+                            <rect x="3" y="14" width="7" height="7" />
+                            <rect x="14" y="14" width="7" height="7" />
+                        </svg></div>
+                    <h2>Corporate Enterprises</h2>
+                    <p>Monolithic structural alignment. We consolidate fragmented corporate systems into unified,
+                        high-performance talent engines driving organizational velocity and competitive advantage.</p>
+                    <div class="irows">
+                        <div class="irow"><span class="dk">CORE</span><span class="dv">System Consolidation</span></div>
+                        <div class="irow"><span class="dk">SCALE</span><span class="dv">Enterprise Resource
+                                Platforms</span></div>
+                        <div class="irow"><span class="dk">FOCUS</span><span class="dv">Alignment & Velocity</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="fg">
+                <div class="fbrand">
+                    <div class="fw">Aasterix Labs</div>
+                    <p>Precision-driven talent solutions delivering scalable workforce outcomes.</p>
+                    <p class="sub">Architectural Precision in Talent.</p>
+                </div>
+                <div class="fcol">
+                    <h5>Navigation</h5>
+                    <ul>
+                        <li onclick="go('services')">Services</li>
+                        <li onclick="go('industries')" class="b">Industries</li>
+                    </ul>
+                </div>
+                <div class="fcol">
+                    <h5>Company</h5>
+                    <ul>
+                        <li onclick="go('about')">About Us</li>
+                        <li onclick="go('contact')">Contact</li>
+                    </ul>
+                </div>
+                <div class="fcol">
+                    <h5>Contact</h5>
+                    <ul>
+                        <li>info@aasterixlabs.com</li>
+                        <li>United States</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fbot">
+                <p>© 2024 Aasterix Labs. Architectural Precision in Talent.</p>
+                <div class="farrow" onclick="window.scrollTo({top:0,behavior:'smooth'})"><svg viewBox="0 0 24 24">
+                        <path d="M18 15l-6-6-6 6" />
+                    </svg></div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ══════════════ CONTACT ══════════════ -->
+    <div class="page" id="page-contact">
+        <div class="ihero">
+            <div class="ihero-bg gbg"></div>
+            <div class="ihero-glow"></div>
+            <div class="ihero-c">
+                <span class="lbl">Get In Touch</span>
+                <h1 class="ph1">Contact <em>Aasterix Labs</em></h1>
+                <p class="psub">We're here to answer your questions about talent solutions, staffing services, and
+                    workforce consulting.</p>
+            </div>
+        </div>
+
+        <section>
+            <span class="lbl">Reach Us</span>
+            <h2 class="stitle">Contact <em>Information</em></h2>
+            <div class="ct3">
+                <div class="ctbox">
+                    <div class="ctbox-icon"><svg viewBox="0 0 24 24">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg></div>
+                    <h4>Email Us</h4>
+                    <a href="mailto:info@aasterixlabs.com">info@aasterixlabs.com</a>
+                    <a href="mailto:contact@aasterixlabs.com">contact@aasterixlabs.com</a>
+                </div>
+                <div class="ctbox">
+                    <div class="ctbox-icon"><svg viewBox="0 0 24 24">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg></div>
+                    <h4>Office Location</h4>
+                    <p>United States</p>
+                    <p style="font-size:13px;color:rgba(100,116,139,.7);margin-top:4px;">Serving clients nationally</p>
+                </div>
+                <div class="ctbox">
+                    <div class="ctbox-icon"><svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12,6 12,12 16,14" />
+                        </svg></div>
+                    <h4>Business Hours</h4>
+                    <p>Monday – Friday</p>
+                    <p>9:00 AM – 6:00 PM EST</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="ctd">
+            <div class="hbg gbg" style="position:absolute;inset:0;pointer-events:none"></div>
+            <div class="ctd-inner">
+                <div>
+                    <span class="lbl">Work With Us</span>
+                    <h2>Ready to Build Your<br><em>Dream Team?</em></h2>
+                    <p>Whether you're looking to fill a single critical role or build an entire division, Aasterix Labs
+                        has the expertise, network, and methodology to deliver exceptional results. Reach out and let's
+                        start the conversation.</p>
+                </div>
+                <div class="cib-stack">
+                    <div class="cib">
+                        <div class="cib-icon"><svg viewBox="0 0 24 24">
+                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+                            </svg></div>
+                        <div>
+                            <div class="cib-lbl">For Employers</div>
+                            <div class="cib-val">Discuss hiring needs and workforce requirements at
+                                info@aasterixlabs.com</div>
+                        </div>
+                    </div>
+                    <div class="cib">
+                        <div class="cib-icon"><svg viewBox="0 0 24 24">
+                                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg></div>
+                        <div>
+                            <div class="cib-lbl">For Candidates</div>
+                            <div class="cib-val">Explore career opportunities at contact@aasterixlabs.com</div>
+                        </div>
+                    </div>
+                    <div class="cib">
+                        <div class="cib-icon"><svg viewBox="0 0 24 24">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg></div>
+                        <div>
+                            <div class="cib-lbl">Headquarters</div>
+                            <div class="cib-val">United States — Serving clients across all regions nationally</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="fg">
+                <div class="fbrand">
+                    <div class="fw">Aasterix Labs</div>
+                    <p>Precision-driven talent solutions delivering scalable workforce outcomes.</p>
+                    <p class="sub">Architectural Precision in Talent.</p>
+                </div>
+                <div class="fcol">
+                    <h5>Navigation</h5>
+                    <ul>
+                        <li onclick="go('services')">Services</li>
+                        <li onclick="go('industries')">Industries</li>
+                    </ul>
+                </div>
+                <div class="fcol">
+                    <h5>Company</h5>
+                    <ul>
+                        <li onclick="go('about')">About Us</li>
+                        <li onclick="go('contact')" class="b">Contact</li>
+                    </ul>
+                </div>
+                <div class="fcol">
+                    <h5>Contact</h5>
+                    <ul>
+                        <li>info@aasterixlabs.com</li>
+                        <li>United States</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fbot">
+                <p>© 2024 Aasterix Labs. Architectural Precision in Talent.</p>
+                <div class="farrow" onclick="window.scrollTo({top:0,behavior:'smooth'})"><svg viewBox="0 0 24 24">
+                        <path d="M18 15l-6-6-6 6" />
+                    </svg></div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function go(name) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            document.getElementById('page-' + name).classList.add('active');
+            document.getElementById('n-' + name).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>
