@@ -1,0 +1,59 @@
+The Netlify deploy errored, with the following guidance provided:
+
+Diagnosis
+- Relevant log lines: the build stops because pnpm refuses to do a frozen install: [line 16](#L16), [line 18](#L18), [line 21](#L21) and the suggestion to update the lockfile at [line 22](#L22). The build ultimately fails at [line 24](#L24). There is also a pre-build warning that NODE_ENV is set to production which will skip devDependencies ([line 15](#L15)).
+- Error type and cause: pnpm exits with ERR_PNPM_LOCKFILE_CONFIG_MISMATCH during a frozen install because the current package/overrides configuration in package.json (or workspace config) does not match the checked-in lockfile. Netlify runs a frozen install by default, so pnpm fails instead of updating the lockfile.
+
+Solution
+1) Preferred fix — update and commit the lockfile:
+- Locally, at the repository root, run:
+```bash
+git pull
+pnpm install --no-frozen-lockfile
+git add pnpm-lock.yaml
+git commit -m "chore: update pnpm lockfile"
+git push
+```
+- Push will let Netlify run a normal install against the updated lockfile and succeed.
+
+2) Alternative (if you cannot update the lockfile immediately):
+- Set an environment variable in Netlify to disable frozen-lockfile for the build: in your Site > Site settings > Build & deploy > Environment > Add variable:
+  - Key: PNPM_CONFIG_FROZEN_LOCKFILE
+  - Value: false
+This tells pnpm to allow updating the lockfile during CI. (Better to update and commit the lockfile long-term.)
+
+3) Address the NODE_ENV warning if your build needs devDependencies:
+- If your build step requires devDependencies, unset or change NODE_ENV so devDependencies are installed, or add the specific dev tools as production dependencies. To change Node env on Netlify, go to Site settings > Build & deploy > Environment and remove or change NODE_ENV. Note the build log warning: [line 15](#L15).
+
+Why this fixes it
+- pnpm’s frozen install refuses to modify the lockfile; updating the lockfile (or permitting it to update) resolves the mismatch reported at [line 21](#L21) and suggested at [line 22](#L22). Committing the updated pnpm-lock.yaml ensures consistent installs in CI.
+
+The relevant error logs are:
+
+Line 0: build-image version: ac6eb13fbf000e5c09ad677efd8b7c3c2d0142b6 (noble-new-builds)
+Line 1: buildbot version: 2f607cea361d04414b42606ef78a12bf932318b7
+Line 2: Fetching cached dependencies
+Line 3: Failed to fetch cache, continuing with build
+Line 4: Starting to prepare the repo for build
+Line 5: No cached dependencies found. Cloning fresh repo
+Line 6: git clone --filter=blob:none https://github.com/saatvik-collab/Simple-Host
+Line 7: Preparing Git Reference refs/heads/main
+Line 8: Installing dependencies
+Line 9: mise ~/.config/mise/config.toml tools: python@3.14.3
+Line 10: mise ~/.config/mise/config.toml tools: ruby@3.4.8
+Line 11: mise ~/.config/mise/config.toml tools: go@1.26.2
+Line 12: v20.20.2 is already installed.
+Line 13: Now using node v20.20.2 (npm v10.8.2)
+Line 14: Enabling Node.js Corepack
+Line 15: WARNING: The environment variable 'NODE_ENV' is set to 'production'. Any 'devDependencies' in package.json will not be installed
+Line 16: Found pnpm version (10.30.3) that doesn't match expected (9)
+Preparing pnpm@9 for immediate activation...
+Line 17: pnpm workspaces detected
+Line 18: Installing npm packages using pnpm version 9.15.9
+Line 19: Failed during stage 'Install dependencies': dependency_installation script returned non-zero exit code: 1
+Line 20: Scope: all 9 workspace projects
+Line 21:  ERR_PNPM_LOCKFILE_CONFIG_MISMATCH  Cannot proceed with the frozen installation. The current "overrides" configuration doesn't m
+Line 22: Update your lockfile using "pnpm install --no-frozen-lockfile"
+Line 23: Error during pnpm install
+Line 24: Failing build: Failed to install dependencies
+Line 25: Finished processing build request in 6.242s
